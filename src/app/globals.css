@@ -8,3 +8,6 @@ body {
   color: #32178d;
 }
 
+html, body {
+  height: 100%;
+}

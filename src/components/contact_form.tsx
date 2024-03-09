@@ -1,23 +1,24 @@
 import { FaQq, FaWeixin, FaEnvelope } from "react-icons/fa";
-import Head from "next/head";
 
 const ContactForm: React.FC = () => {
   return (
     <>
-      <Head>
-      <style>{`
+      <head>
+        <style>{`          
           .contact-form {
             position: fixed;
             bottom: 0;
-            left: 0;
             width: 100%;
+            height: 15%
             padding: 20px;
-            background-color: #f1f1f1;
+            text-align: center;
+            color: #f30d27;
           }
 
-          .contact-item {
+          .contact-form contact-item {
             display: flex;
             align-items: center;
+            text-align: center;
             margin-bottom: 10px;
           }
 
@@ -25,24 +26,24 @@ const ContactForm: React.FC = () => {
             margin-left: 10px;
           }
         `}</style>
-      </Head>
+      </head>
 
       <div className="contact-form">
-        <h3>Contact Information</h3>
+        <h5>Contact Information</h5>
         <div className="contact-item">
           <FaQq />
           <span>QQ:</span>
-          <span>123456789</span>
+          <span>2152814</span>
         </div>
         <div className="contact-item">
           <FaWeixin />
           <span>WeChat:</span>
-          <span>wechat_user</span>
+          <span>15984304723</span>
         </div>
         <div className="contact-item">
           <FaEnvelope />
           <span>Email:</span>
-          <span>example@example.com</span>
+          <span>zcj2518529668@163.com</span>
         </div>
       </div>
     </>
