@@ -9,23 +9,20 @@ async function scrapeNews(): Promise<NewsItem[]> {
   try {
     await page.goto("https://www.epochtimes.com/gb/nsc413.htm", {
       waitUntil: "domcontentloaded",
-    }); // 等待页面DOM内容加载完成
+    });
 
-    // 等待一段时间（例如2秒）以确保页面上的内容已完全加载和渲染
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("开始测试A");
-    console.log(page);
     // 等待特定元素出现
-    await page.waitForSelector(".one_post");
+    await page.waitForSelector(".pagination");
 
     const newsData = await page.evaluate(() => {
-      console.log("开始测试B");
       const newsItems = document.querySelectorAll(".one_post");
       const news: NewsItem[] = [];
       newsItems.forEach((item: Element) => {
         const titleElement = item.querySelector(".title");
         const descriptionElement = item.querySelector(".excerpt");
         const imageElement = item.querySelector(".img");
+        const dateElement = item.querySelector(".date");
+        const pageViewElement = item.querySelector(".pageview");
 
         // 使用类型断言确保选择器一定会返回一个具有 innerText 属性的元素
         const title = titleElement
@@ -36,23 +33,29 @@ async function scrapeNews(): Promise<NewsItem[]> {
           : "";
         let imageUrl = "";
         let itUrl = "";
+        const date = dateElement ? (dateElement as HTMLElement).innerText : "";
+        const pageView = pageViewElement
+          ? (pageViewElement as HTMLElement).innerText
+          : "";
 
         // 检查是否找到了.img元素
         if (imageElement) {
           // 获取.img元素的子元素<img>标签
           const imgTag = imageElement.querySelector("img");
           // 爬取src属性
-          imageUrl = imgTag ? imgTag.getAttribute("src") || "" : "";
+          imageUrl = imgTag ? imgTag.getAttribute("data-src") || "/imgs/default/df-img.png" : "";
           // 爬取href属性
           const aTag = imageElement.querySelector("a");
           itUrl = aTag ? aTag.getAttribute("href") || "" : "";
         }
-
-        news.push({ title, description, imageUrl, itUrl });
+        
+        news.push({ title, description, imageUrl, itUrl, date, pageView });
       });
       return news;
     });
-
+    newsData.map(item=>{
+    console.log("测试URL:"+item.imageUrl);
+    });
     return newsData;
   } catch (error) {
     console.error("Error scraping news:", error);

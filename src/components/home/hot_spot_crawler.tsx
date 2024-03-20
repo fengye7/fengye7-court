@@ -103,6 +103,8 @@ const HotNews = () => {
                       title={item.title}
                       description={item.description}
                       itUrl={item.itUrl}
+                      date={item.date}
+                      pageView={item.pageView}
                     />
                   </li>
                 ))}

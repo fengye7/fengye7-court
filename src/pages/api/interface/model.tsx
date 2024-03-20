@@ -5,6 +5,8 @@ interface NewsItem {
     description: string;
     imageUrl: string;
     itUrl: string;
+    date:string;
+    pageView: string;
   }
   
   export default NewsItem;
