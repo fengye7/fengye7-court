@@ -35,17 +35,20 @@ async function scrapeNews(): Promise<NewsItem[]> {
           ? (descriptionElement as HTMLElement).innerText
           : "";
         let imageUrl = "";
+        let itUrl = "";
 
         // 检查是否找到了.img元素
         if (imageElement) {
           // 获取.img元素的子元素<img>标签
           const imgTag = imageElement.querySelector("img");
-          // 检查是否找到了<img>标签并且src属性存在
+          // 爬取src属性
           imageUrl = imgTag ? imgTag.getAttribute("src") || "" : "";
-
+          // 爬取href属性
+          const aTag = imageElement.querySelector("a");
+          itUrl = aTag ? aTag.getAttribute("href") || "" : "";
         }
 
-        news.push({ title, description, imageUrl, itUrl: "" });
+        news.push({ title, description, imageUrl, itUrl });
       });
       return news;
     });

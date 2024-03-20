@@ -10,7 +10,6 @@ const HotNews = () => {
   // 处理新闻
   const [newsData, setNewsData] = useState([] as NewsItem[]); // 设置初始状态为一个空的 NewsItem 数组
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetchNewsData();
@@ -18,10 +17,9 @@ const HotNews = () => {
 
   const fetchNewsData = async () => {
     try {
-      const response = await axios.get(`/api/news_server?page=${page}`);
+      const response = await axios.get(`/api/news_server`);
       const newData = response.data;
-      setNewsData((prevData) => [...prevData, ...newData]);
-      setPage((prevPage) => prevPage + 1);
+      setNewsData(newData);
       if (newData.length === 0) {
         setHasMore(false);
       }
@@ -42,14 +40,25 @@ const HotNews = () => {
       <style>
         {`
           .tab-div {
-          position: fixed;
-          top: 6.5%;
-          left: 10%;
-          width: 90%;
-          height: 80%;
-          background-color: rgba(50, 100, 150, 0.5);
-          z-index: 10000;
+            position: fixed;
+            top: 6.5%;
+            left: 10%;
+            width: 90%;
+            height: 80%;
+            background-color: rgba(50, 100, 150, 0.5);
+            z-index: 10000;
+            overflow-y: auto; /* 添加滚动条 */
           }
+          
+          .tab-content {
+            height: 100%; /* 使用父容器的高度 */
+          }
+          
+          .tab-pane {
+            height: 100%; /* 使用父容器的高度 */
+            overflow-y: auto; /* 添加滚动条 */
+          }
+          
         `}
       </style>
       <div className="tab-div">
