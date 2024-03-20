@@ -1,9 +1,8 @@
 const Sidebar: React.FC = () => {
   return (
     <>
-      <head>
-        <style>
-          {`
+      <style>
+        {`
             .sidebar {
               position: fixed;
               top: 6%;
@@ -35,8 +34,7 @@ const Sidebar: React.FC = () => {
               font-size: 14px;
             }
           `}
-        </style>
-      </head>
+      </style>
       <div className="sidebar">
         <ul className="nav flex-column">
           <li className="nav-item">

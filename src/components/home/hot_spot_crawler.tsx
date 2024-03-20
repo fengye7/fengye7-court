@@ -2,9 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ListItem from "./list_item";
+import NewsItem from "@/pages/api/interface/model";
+import InfiniteScroll from "react-infinite-scroll-component"; //react的滚动组件
 
 const HotNews = () => {
-  const [newsData, setNewsData] = useState([]);
+  // 处理新闻
+  const [newsData, setNewsData] = useState([] as NewsItem[]); // 设置初始状态为一个空的 NewsItem 数组
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetchNewsData();
@@ -12,64 +18,88 @@ const HotNews = () => {
 
   const fetchNewsData = async () => {
     try {
-      const response = await axios.get("<your_api_endpoint>"); // 替换为你的爬虫结果 API 端点
-      setNewsData(response.data);
+      const response = await axios.get(`/api/news_server?page=${page}`);
+      const newData = response.data;
+      setNewsData((prevData) => [...prevData, ...newData]);
+      setPage((prevPage) => prevPage + 1);
+      if (newData.length === 0) {
+        setHasMore(false);
+      }
     } catch (error) {
       console.error("Error fetching news data:", error);
     }
   };
 
+  // 处理tab页
+  const [activeTab, setActiveTab] = useState("home");
+
+  const handleTabChange = (tabId: React.SetStateAction<string>) => {
+    setActiveTab(tabId);
+  };
+
   return (
     <>
-      <head>
-        <style>
-            {`
-              .hot-news {
-              position: fixed;
-              top: 6.5%;
-              left: 10%;
-              width: 90%;
-              height: 80%;
-              background-color: rgba(0, 0, 0, 0.5);
-              z-index: 10000;
-              }
-            `}
-        </style>
-      </head>
-      <div className="hot-news">
-        <h2>多个标签页</h2>
-        <ul className="nav nav-tabs">
-          {newsData.map((category, index) => (
-            <li key={index} className="nav-item">
-              <a
-                className={`nav-link ${index === 0 ? "active" : ""}`}
-                data-bs-toggle="tab"
-                href={`#tab-${index}`}
-              ></a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="tab-content">
-          {newsData.map((category, index) => (
-            <div
-              key={index}
-              className={`tab-pane fade ${index === 0 ? "show active" : ""}`}
-              id={`tab-${index}`}
+      <style>
+        {`
+          .tab-div {
+          position: fixed;
+          top: 6.5%;
+          left: 10%;
+          width: 90%;
+          height: 80%;
+          background-color: rgba(50, 100, 150, 0.5);
+          z-index: 10000;
+          }
+        `}
+      </style>
+      <div className="tab-div">
+        <ul className="nav nav-tabs" id="myTab" role="tablist">
+          <li className="nav-item" role="presentation">
+            <button
+              className={`nav-link ${activeTab === "News" ? "active" : ""}`}
+              id="News-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#News"
+              type="button"
+              role="tab"
+              aria-controls="News"
+              aria-selected={activeTab === "News"}
+              onClick={() => handleTabChange("News")}
             >
-              <ul className="list-group mt-3">
-                {/* {category.items.map((newsItem, itemIndex) => (
-              <li key={itemIndex} className="list-group-item d-flex">
-                <img src={newsItem.image} alt={newsItem.title} className="me-3" style={{ maxWidth: '100px' }} />
-                <div>
-                  <h4>{newsItem.title}</h4>
-                  <p>{newsItem.description}</p>
-                </div>
-              </li>
-            ))} */}
+              News
+            </button>
+          </li>
+        </ul>
+        <div className="tab-content" id="myTabContent">
+          <div
+            className={`tab-pane fade ${
+              activeTab === "News" ? "show active" : ""
+            }`}
+            id="News"
+            role="tabpanel"
+            aria-labelledby="News-tab"
+          >
+            <InfiniteScroll
+              dataLength={newsData.length}
+              next={fetchNewsData}
+              hasMore={hasMore}
+              loader={<h4>Loading...</h4>}
+              endMessage={<p>No more news</p>}
+            >
+              <ul>
+                {newsData.map((item, index) => (
+                  <li key={index}>
+                    <ListItem
+                      imageUrl={item.imageUrl}
+                      title={item.title}
+                      description={item.description}
+                      itUrl={item.itUrl}
+                    />
+                  </li>
+                ))}
               </ul>
-            </div>
-          ))}
+            </InfiniteScroll>
+          </div>
         </div>
       </div>
     </>

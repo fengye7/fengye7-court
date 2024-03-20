@@ -3,8 +3,7 @@ import { FaQq, FaWeixin, FaEnvelope } from "react-icons/fa";
 const ContactForm: React.FC = () => {
   return (
     <>
-      <head>
-        <style>{`          
+      <style>{`          
           .contact-form {
             position: fixed;
             bottom: 0;
@@ -26,7 +25,6 @@ const ContactForm: React.FC = () => {
             margin-left: 10px;
           }
         `}</style>
-      </head>
 
       <div className="contact-form">
         <h5>Contact Information</h5>
