@@ -29,7 +29,7 @@ const HotNews = () => {
   };
 
   // 处理tab页
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("News");
 
   const handleTabChange = (tabId: React.SetStateAction<string>) => {
     setActiveTab(tabId);

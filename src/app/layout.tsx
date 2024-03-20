@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import BootstrapClient from "@/components/BootstrapClient";
+import CustomNavbar from "@/components/navigation_bar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,10 +25,11 @@ export default function RootLayout({
         <body className={inter.className}>
           {children}
           <BootstrapClient />
+          <CustomNavbar/>
 
           <script 
-            type="text/javascript"
-            src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"
+            type="text/javascript" 
+            src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js" // 引入跟随鼠标的线条样式
           ></script>
         </body>
       </html>

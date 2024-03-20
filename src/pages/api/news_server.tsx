@@ -53,9 +53,7 @@ async function scrapeNews(): Promise<NewsItem[]> {
       });
       return news;
     });
-    newsData.map(item=>{
-    console.log("测试URL:"+item.imageUrl);
-    });
+
     return newsData;
   } catch (error) {
     console.error("Error scraping news:", error);

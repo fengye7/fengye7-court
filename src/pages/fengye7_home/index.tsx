@@ -6,7 +6,6 @@ import Sidebar from "@/components/sidebar";
 export default function Fengye7Home() {
   return (
     <>
-      <CustomNavbar />
       <Sidebar />
       <ContactForm />
       <HotNews/>

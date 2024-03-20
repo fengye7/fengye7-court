@@ -1,3 +1,5 @@
+import { fengye7BlogURL } from "@/closet/constants";
+
 const Sidebar: React.FC = () => {
   return (
     <>
@@ -38,23 +40,28 @@ const Sidebar: React.FC = () => {
       <div className="sidebar">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="#">
+            <a className="nav-link" aria-current="page" href="/music">
               音乐
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" aria-current="page" href="#">
               个人作品
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" aria-current="page" href={fengye7BlogURL}>
               博客
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" aria-current="page" href="#">
               统计分析
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" aria-current="page" href="#">
+              Fengye7's AI
             </a>
           </li>
         </ul>
