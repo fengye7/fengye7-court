@@ -1,6 +1,5 @@
 import ContactForm from "@/components/contact_form";
-import HotNews from "@/components/home/hot_spot_crawler";
-import CustomNavbar from "@/components/navigation_bar";
+import TabView from "@/components/home/tab_view";
 import Sidebar from "@/components/sidebar";
 
 export default function Fengye7Home() {
@@ -8,7 +7,7 @@ export default function Fengye7Home() {
     <>
       <Sidebar />
       <ContactForm />
-      <HotNews/>
+      <TabView/>
     </>
   );
 }

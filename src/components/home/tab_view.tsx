@@ -5,8 +5,9 @@ import axios from "axios";
 import ListItem from "./list_item";
 import NewsItem from "@/pages/api/interface/model";
 import InfiniteScroll from "react-infinite-scroll-component"; //react的滚动组件
+import VideoPlayerPage from "./video_tab_page";
 
-const HotNews = () => {
+const TabView = () => {
   // 处理新闻
   const [newsData, setNewsData] = useState([] as NewsItem[]); // 设置初始状态为一个空的 NewsItem 数组
   const [hasMore, setHasMore] = useState(true);
@@ -78,7 +79,24 @@ const HotNews = () => {
               News
             </button>
           </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className={`nav-link ${activeTab === "Videos" ? "active" : ""}`}
+              id="Videos-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#Videos"
+              type="button"
+              role="tab"
+              aria-controls="Videos"
+              aria-selected={activeTab === "Videos"}
+              onClick={() => handleTabChange("Videos")}
+            >
+              Videos
+            </button>
+          </li>
         </ul>
+        
+        {/* 下面是tab页面 */}
         <div className="tab-content" id="myTabContent">
           <div
             className={`tab-pane fade ${
@@ -112,9 +130,22 @@ const HotNews = () => {
             </InfiniteScroll>
           </div>
         </div>
+
+        <div className="tab-content" id="myTabContent">
+          <div
+            className={`tab-pane fade ${
+              activeTab === "Videos" ? "show active" : ""
+            }`}
+            id="Videos"
+            role="tabpanel"
+            aria-labelledby="Videos-tab"
+          >
+            <VideoPlayerPage/>
+          </div>
+        </div>
       </div>
     </>
   );
 };
 
-export default HotNews;
+export default TabView;

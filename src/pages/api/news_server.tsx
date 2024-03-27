@@ -3,6 +3,9 @@ import puppeteer from "puppeteer"; // 使用 ES6 import 语法 使用puppeteer�
 import NewsItem from "./interface/model"; // 确保引入正确的模型文件路径
 
 async function scrapeNews(): Promise<NewsItem[]> {
+  // const browser = await puppeteer.launch({ // 这里可以使用代理服务器，下面爬虫的网址需要VPN
+  //   args: ['--proxy-server=http://your-proxy-server-ip:port']
+  // });
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -43,7 +46,7 @@ async function scrapeNews(): Promise<NewsItem[]> {
           // 获取.img元素的子元素<img>标签
           const imgTag = imageElement.querySelector("img");
           // 爬取src属性
-          imageUrl = imgTag ? imgTag.getAttribute("data-src") || "/imgs/default/df-img.png" : "";
+          imageUrl = imgTag ? imgTag.getAttribute("data-src") || "/imgs/default/df-img.png" : ""; // getAttribute("src")图片有问题，猜想是渲染在客户端上后属性名变化
           // 爬取href属性
           const aTag = imageElement.querySelector("a");
           itUrl = aTag ? aTag.getAttribute("href") || "" : "";
