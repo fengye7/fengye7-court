@@ -6,6 +6,7 @@ import ListItem from "./list_item";
 import NewsItem from "@/pages/api/interface/model";
 import InfiniteScroll from "react-infinite-scroll-component"; //react的滚动组件
 import VideoPlayerPage from "./video_tab_page";
+import MusicPage from "./music_closet";
 
 const TabView = () => {
   // 处理新闻
@@ -48,7 +49,6 @@ const TabView = () => {
             height: 80%;
             background-color: rgba(50, 100, 150, 0.5);
             z-index: 10000;
-            overflow-y: auto; /* 添加滚动条 */
           }
           
           .tab-content {
@@ -94,9 +94,25 @@ const TabView = () => {
               Videos
             </button>
           </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className={`nav-link ${activeTab === "MusicCloset" ? "active" : ""}`}
+              id="MusicCloset-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#MusicCloset"
+              type="button"
+              role="tab"
+              aria-controls="MusicCloset"
+              aria-selected={activeTab === "MusicCloset"}
+              onClick={() => handleTabChange("MusicCloset")}
+            >
+              MusicCloset
+            </button>
+          </li>
         </ul>
         
-        {/* 下面是tab页面 */}
+        {/* 下面是tab页面
+        新闻列表：来自大纪元大陆新闻网 https://www.epochtimes.com/gb/nsc413.htm */}
         <div className="tab-content" id="myTabContent">
           <div
             className={`tab-pane fade ${
@@ -129,9 +145,7 @@ const TabView = () => {
               </ul>
             </InfiniteScroll>
           </div>
-        </div>
-
-        <div className="tab-content" id="myTabContent">
+          {/* 视频tab页面 */}
           <div
             className={`tab-pane fade ${
               activeTab === "Videos" ? "show active" : ""
@@ -141,6 +155,17 @@ const TabView = () => {
             aria-labelledby="Videos-tab"
           >
             <VideoPlayerPage/>
+          </div>
+          {/*下面是音乐壁橱*/}
+          <div
+            className={`tab-pane fade ${
+              activeTab === "MusicCloset" ? "show active" : ""
+            }`}
+            id="MusicCloset"
+            role="tabpanel"
+            aria-labelledby="MusicCloset-tab"
+          >
+            <MusicPage/>
           </div>
         </div>
       </div>
